@@ -1,0 +1,61 @@
+
+
+.text
+
+main:
+
+#lendo numero de linhas:
+li $v0,5
+syscall
+
+#armazenarei em s0 o numero de linhas
+
+#s0 vai receber o conteudo digitado em v0
+move $s0,$v0
+
+#lendo o primeiro numero:
+li $v0,5
+syscall
+
+#colocarei a maior nota em a0
+move $a0,$v0
+
+# i = s1 
+#incializando i
+addi $s1,$zero,1
+loop:
+
+#quando percorrermos todas as linhas sairemos do loop
+ beq		$s1, $s0, exit
+
+#incremetando i e lendo a proxima linha
+addi $s1,$s1,1 #i++
+
+#lendo os proximos numeros
+li $v0,5
+syscall
+
+#validando qual a maior nota:
+slt $t0,$a0,$v0
+
+#se a nota em v0 for maior vamos substituir a variavel a0
+bne $t0,$zero,alteraMaior
+
+#indo para o loop para verificar todos os numeros
+j loop
+
+#loop de validacao de maior numero:
+alteraMaior:
+
+#a0 recebe o maior numero digitado
+move $a0,$v0
+
+#refaz o loop para validar com os demais
+ j loop
+exit:
+
+#imprindo string
+li $v0,1
+syscall
+#encerrando o programa
+li $v0,10

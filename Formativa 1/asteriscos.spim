@@ -1,0 +1,75 @@
+.data
+asterisco: .asciiz "*"
+enter: .asciiz "\n"
+
+.text
+
+main:
+
+    #lendo o inteiro digitado pelo usuario
+    li		$v0, 5	
+    syscall
+
+    #armazenando em a1 o conteudo digitado
+    move 	$a1, $v0
+
+    # interacoes = $t0
+    # quantidade de asteriscos = $t1
+    move 	$t0, $zero		# inicializando t0 = 0
+    addi	$t1, $zero, 1	# inicializando t1 = 1
+    
+    
+    j		loopInteracao				# jump para loopInteracao e salvando posicao em $ra
+
+saida:
+    #saida programa, encerramento
+	li      $v0, 10	
+    syscall
+
+loopInteracao:
+    # interações==0
+    beq		$t0, $a1, saida	
+    
+    # contaAsteriscos = $t2
+
+    #inicializando t2=0
+    addi	$t2, $zero, 0			
+
+    #carrega o asterisco para ser impresso
+    la		$a0, asterisco 
+    jal		loopImprimeAsteriscos	# jump para loopImprimeAsteriscos e salvando a posicao em $ra
+     
+    # quantidade de asteriscos =+ 2
+    addi	$t1, $t1, 2			# incializando t1 =2
+    
+    la		$a0, enter		# carrega o \n para ser impresso
+
+    # inicializando v0 = 4
+    li		$v0, 4		
+    syscall
+    
+    # incializando t0 = 1
+    addi	$t0, $t0, 1			
+
+    j loopInteracao
+
+loopImprimeAsteriscos:
+    
+    beq		$t2, $t1, returnAsteriscos	
+    
+    #imprimindo strings
+    li		$v0, 4		
+    syscall
+
+    #Incrementando os asteriscos
+
+    #adicionando +1 nos  ao contador de asteriscos
+    addi	$t2, $t2, 1	
+    
+    # jump paraloopImprimeAsteriscos
+    j		loopImprimeAsteriscos				
+
+returnAsteriscos:
+
+# jump para $ra
+    jr		$ra	

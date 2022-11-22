@@ -1,0 +1,55 @@
+
+bitparidade:
+    #$t0 => mascara
+    #$t1 => contador de interacoes
+    #$t9 => contador de bits 1
+
+    #inicializando v0 com 0
+    move 	$v0, $zero
+
+    #v1 recebendo conteudo de a0		
+    move 	$v1, $a0	
+
+    # incializando t0 = 1
+    li		$t0, 1	
+
+    # inicializando t1 = 7	
+    li		$t1, 7	
+
+    # inicializando t9 = 0
+    move 	$t9, $zero		
+
+## $t1 = 0 encerro
+loopOne: beq		$t1, $zero, exitOne	
+
+    and		$t2, $t0, $a0		
+    
+    # t4 recebendo o conteudo de t0
+    move 	$t4, $t0		
+
+    #descola o bit da mascara
+    sll		$t0, $t0, 1			# $t0 = $t0 << 1
+
+    #contador de interacoes--
+    addi	$t1, $t1, -1			# $t1 = $t1 + -1
+
+    # Se o resultado do and for diferente da mascara, não temos bit 1
+    bne		$t4, $t2, loopOne	
+
+    addi	$t9, $t9, 1			# $t9 = $t9 + 1
+    
+    j loopOne
+
+exitOne:
+
+    andi	$t8, $t9, 1			# $t8 = $t9 & 1
+    beq		$t8, $zero, returnOne	
+
+    li		$v0, 1		# $v0 = 1
+    
+    #128 = 10000000
+    ori	    $v1, $a0, 128			# $v1 = $a0 | 128
+    
+returnOne:
+    jr		$ra					# jump para $ra
+ 

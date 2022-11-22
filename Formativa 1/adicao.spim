@@ -1,0 +1,26 @@
+.text
+
+main:
+
+#lendo o primeiro inteiro
+li $v0,5 
+syscall #lendo do usuario o inteiro desejado
+#guardando o dado em t0
+move $t0,$v0
+#lendo o segundo inteiro
+
+li $v0,5 
+syscall #lendo do usuario o inteiro desejado
+#guardando o dado em t1
+move $t1,$v0
+
+#fazendo a soma dos dois numeros:
+add $a0,$t0,$t1 #guardando em a0 o resultado da soma
+
+#imprimir o valor na tela:
+li $v0,1
+syscall
+
+#saida do codigo:
+li $v0,10
+syscall

@@ -1,0 +1,34 @@
+.text
+
+main:
+
+#lendo inteiro do usuario (nota do aluno)
+li $v0,5
+syscall
+
+#guardando a nota do aluno em $s1
+move $s1,$v0
+
+#armazenando as notas em letras em $a0,inicializando com 65.
+li $a0,65
+
+#verificando as condicionais das notas
+slti $t0,$s1,86
+add $a0,$a0,$t0
+
+slti $t0,$s1,61
+add $a0,$a0,$t0
+
+slti $t0,$s1,36
+add $a0,$a0,$t0
+
+slti $t0,$s1,1
+add $a0,$a0,$t0
+
+#imprimir string
+li $v0,11
+syscall
+
+#encerramento do programa:
+li $v0,10
+syscall

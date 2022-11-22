@@ -1,0 +1,11 @@
+.data
+ola: .asciiz "Ola Mundo\n"
+
+.text
+
+main:
+li $v0,4 #imprimir string => Syscall
+la $a0,ola #Pega o valor que ta na memoria e coloca no registrador.
+syscall
+li $v0,10 # encerrar o programa.
+syscall
