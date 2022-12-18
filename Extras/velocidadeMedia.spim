@@ -1,0 +1,20 @@
+.data                                   #atribuicao de valor para as variaveis
+.text                                   #instrucoes do programa
+
+main:                                   #inicio para a execucao do programa
+    
+    li $v0, 7                           #chamada de sistema para que leia um double
+    syscall                             #chamada                    
+
+    mov.d $f2, $f0                      #move para $f1 o que está em $f0
+    
+    li $v0, 7                           #chamada de sistema para que leia um double
+    syscall                             #chamada   
+    
+    div.d $f12, $f2, $f0                #armazena em $f12 o resultado da divisão entre $f1 e $f0
+
+    li $v0, 3                           #chamada de sistema para que imprima um float
+    syscall                             #chamada                    
+
+    li $v0, 10                          #chamada de saida do programa
+    syscall                             #chamada
